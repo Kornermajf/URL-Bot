@@ -11,7 +11,10 @@ on:
 permissions:
   contents: read
   actions: write
-  
+
+env:
+  PROXY_URL: ${{secrets.PROXY_URL}}
+
 jobs:
   build:
     runs-on: windows-latest

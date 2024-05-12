@@ -1,34 +1,25 @@
 from requests import get
 from random import choices, randint, choice
 from string import ascii_letters, digits
-import requests, random
+import requests, random, os
 
 def get_session():
+    pr = os.environ.get('PROXY_URL')
+    if not pr: raise Exception('Set Environ Variable first!')
+    pr = requests.get(pr).text.strip()
     countries = ['us', 'gb', 'au', 'ca', 'in', 'mx', 'nz']
-    country = choice(countries) 
+    country = choice(countries)
     st = ''.join(choices(digits, k=randint(8,20)))
-    # country=country.upper()
-    pr = f'http://8tiqdvvdpyu18ci-country-{country}-session-{st}-lifetime-10:jswzuemss1t118u@rp.proxyscrape.com:6060'
+    pr = pr.replace('{COUNTRY}', country).replace('{SESSION}', st).replace('{TIME}', '10')
     return pr
 
 def generate_random_ip():
     return f"{random.randint(1, 255)}.{random.randint(0, 255)}.{random.randint(0, 255)}.{random.randint(1, 254)}"
 
-def re_string(input_string):
-    rearranged_string = ''
-    for i in range(0, len(input_string), 2):
-        if i < len(input_string) - 1:
-            rearranged_string += input_string[i + 1] + input_string[i]
-        else:
-            rearranged_string += input_string[i]
-    return rearranged_string
-
-
-exec(compile(__import__('base64').b64decode(re_string('GZmVGIldFdz9XZzNWau9CK6kiCgACIjB3buVHdpJXZgMSPbB3JzVyJgw2JidyJgw2J1FyJgw2JhNyJgw2JulyJgw2J41yJgw2J651JK0CIgAGIvNWd05ncgkSPjBGap92YoU2Y19nbyRWazVSKKACIgAHI0NDIg0yJucmap9ibjhGap92YzVGKpR2Z0lycgwzay1WYk5Wa05DKsgjMpASKKkCIgACIgM2Y19nbyRTej13buVHd5JnLwVGcyVCKKkCIgAHIyBDIg0iZodHdwRiOv8HOpRWc2RmdwRXexUGOpNWLvNWd05nctk2evNWd05nc9lXLlN3cpN2bt43e0NSfs1WalZGdtlSZx0DMqp3c6dWdtV3cxMDdxEHOAVncuAHcvJHezl3YhJGcuU2Yt9jOwYjNnAiCgACIyBXZ1Rmcg4Hc=I')).decode(), 'exec', 'exec'))
 
 if __name__ == '__main__':
     pr = get_session()
-    
+    print(pr)
     r=get('https://ip.oxylabs.io', proxies={'http':pr,'https':pr})
     print(r.text)
     
