@@ -14,7 +14,6 @@ def run_terabox_bot(link, proxy=None, headless=None):
         raise Exception('Error in teraboxlinks links. Location is None')
     print('TeraBox Links:', loc)
     # submitOne(idn)
-    
 
 
 if __name__=='__main__':

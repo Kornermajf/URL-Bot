@@ -28,9 +28,13 @@ def addTraffic(url1: str, url2: str, url3: str, gaID: str):
     open('test.html', 'wb').write(br.response().read())
 
 
-addTraffic('https://file.urbanpincode.com/',
-           'https://file.urbanpincode.com/exploring-the-university-of-massachusetts/',
-           'https://file.urbanpincode.com/chamberlain-university-troy-shaping-the-future-of-healthcare-leadership/',
-           'G-ZR64NJY7DW')
+# addTraffic('https://file.urbanpincode.com/',
+#            'https://file.urbanpincode.com/exploring-the-university-of-massachusetts/',
+#            'https://file.urbanpincode.com/chamberlain-university-troy-shaping-the-future-of-healthcare-leadership/',
+#            'G-ZR64NJY7DW')
 
+addTraffic('https://www.flixwonders.com/',
+           'https://www.flixwonders.com/2022/11/black-panther-wakanda-forever.html',
+           'https://www.flixwonders.com/2019/06/spider-man-far-from-home.html',
+           'G-V5D81QRWQ1')
 
