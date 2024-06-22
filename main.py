@@ -8,6 +8,7 @@ from teraboxlinks import run_terabox_bot
 # from zagl import run_zagl_bot
 from random import randint
 import urllib3, threading
+from time import sleep
 Thread=threading.Thread
 
 d={'e':''}
@@ -43,7 +44,6 @@ def main(proxy=None, **kw):
     
     if d['e']!='': raise Exception(d['e'])
     # Slow earning speed
-    from time import sleep
     sleep(10)
 
 
