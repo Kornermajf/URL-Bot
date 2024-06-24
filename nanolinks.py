@@ -5,7 +5,7 @@ import re
 
 def run_nano_bot(link, proxy=None, headless=None):
     idn = 'urlbot-nanolink'
-    if isCompleted(1824, idn): return print('Target Completed. Function did not run')
+    if isCompleted(2058, idn): return print('Target Completed. Function did not run')
     s=Session()
     s.proxies=dict(http=proxy, https=proxy)
     r1=s.get(link, headers={'Referer': 'https://thekisscartoon.com/'}, allow_redirects=False)
