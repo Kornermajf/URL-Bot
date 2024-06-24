@@ -1,10 +1,11 @@
 from cloudscraper import CloudScraper as Session
 from proxyscrape import generate_random_ip
+from limiter import *
 import re
 
 def run_nano_bot(link, proxy=None, headless=None):
-    # idn = 'urlbot-nanolink'
-    # if isCompleted(1428, idn): return print('Target Completed. Function did not run')
+    idn = 'urlbot-nanolink'
+    if isCompleted(1824, idn): return print('Target Completed. Function did not run')
     s=Session()
     s.proxies=dict(http=proxy, https=proxy)
     r1=s.get(link, headers={'Referer': 'https://thekisscartoon.com/'}, allow_redirects=False)
@@ -12,7 +13,7 @@ def run_nano_bot(link, proxy=None, headless=None):
     if loc is None:
         raise Exception(f'Error in nano links. Location is None. Status: {r1.status_code}')
     print('Nano Links:', loc)
-    # submitOne(idn)
+    submitOne(idn)
     
 
 
