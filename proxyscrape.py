@@ -10,6 +10,10 @@ def get_session():
     countries = ['us', 'gb', 'au', 'ca', 'in', 'mx', 'nz']
     country = choice(countries)
     st = ''.join(choices(digits, k=randint(8,20)))
+
+    # enable all country
+    pr = pr.replace('country-{COUNTRY}-', '')
+    
     pr = pr.replace('{COUNTRY}', country).replace('{SESSION}', st).replace('{TIME}', '10')
     return pr
 
