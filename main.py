@@ -45,7 +45,7 @@ def main(proxy=None, **kw):
     
     if d['e']!='': raise Exception(d['e'])
     # Slow earning speed
-    sleep(7)
+    sleep(5)
 
 
 
