@@ -3,6 +3,7 @@ from all_links import *
 # from telegramlinks import run_telegram_bot
 from teraboxlinks import run_terabox_bot
 from nanolinks import run_nano_bot
+from adrinolinks import run_adrino_bot
 # from kingurl import run_kingurl_bot
 # from udlinks import run_udlinks_bot
 # from malink import run_malink_bot
@@ -31,6 +32,7 @@ def main(proxy=None, **kw):
     t=[]
     t.append(Thread(target=lambda: run_terabox_bot(random_teraboxlinks, proxy, **kw)))
     t.append(Thread(target=lambda: run_nano_bot(random_nanolinks, proxy, **kw)))
+    t.append(Thread(target=lambda: run_adrino_bot(random_adrino, proxy, **kw)))
     # t.append(Thread(target=lambda: run_udlinks_bot(random_udlinks, proxy, **kw)))
     # t.append(Thread(target=lambda: run_malink_bot(random_malink, proxy, **kw)))
     # t.append(Thread(target=lambda: run_zagl_bot(random_zagl, proxy, **kw)))
@@ -45,7 +47,7 @@ def main(proxy=None, **kw):
     
     if d['e']!='': raise Exception(d['e'])
     # Slow earning speed
-    sleep(5)
+    sleep(15)
 
 
 
