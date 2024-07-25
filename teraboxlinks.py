@@ -8,7 +8,7 @@ def run_terabox_bot(link, proxy=None, headless=None):
     # if isCompleted(1428, idn): return print('Target Completed. Function did not run')
     s=Session()
     s.proxies=dict(http=proxy, https=proxy)
-    r1=s.get(link, headers={'Referer': 'https://thekisscartoon.com/'}, allow_redirects=False, stream=True)
+    r1=s.get(link, headers={'Referer': 'https://moviesverse.diy/'}, allow_redirects=False, stream=True)
     loc = r1.headers.get('Location')
     if loc is None:
         raise Exception('Error in teraboxlinks links. Location is None')
