@@ -14,15 +14,12 @@ def isCompleted(t:int, idn:str):
     return True if c >= t else False
 
 def submitOne(idn:str):
-    q = r.get(f'https://letscountapi.com/{idn}/{cur_date}')
-    if not q.json()['exists']:
-        r.post(f'https://letscountapi.com/{idn}/{cur_date}', data='{"current_value": 0}', headers={'Content-Type': 'application/json'})
-    w = r.post(f'https://letscountapi.com/{idn}/{cur_date}/increment')
-    c = int(w.json().get('current_value', 0))
+    q = r.get(f'https://api.counterapi.dev/v1/{idn}/{cur_date}/up')
+    c = int(q.json().get('count', 0))
     return c
 
 def getRecord(idn:str):
-    q = r.get(f'https://letscountapi.com/{idn}/{cur_date}')
-    c = int(q.json().get('current_value', 0))
+    q = r.get(f'https://api.counterapi.dev/v1/{idn}/{cur_date}')
+    c = int(q.json().get('count', 0))
     return c
 
