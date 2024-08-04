@@ -5,7 +5,7 @@ import re, random
 
 def run_adrino_bot(link, proxy=None, headless=None):
     idn = 'urlbot-adrinolink'
-    if isCompleted(1190, idn): return print('Target Completed. Function did not run')
+    if isCompleted(1500, idn): return print('Target Completed. Function did not run')
     if random.randint(0, 1): return print('Randomly Function did not run')
     s=Session()
     s.proxies=dict(http=proxy, https=proxy)
