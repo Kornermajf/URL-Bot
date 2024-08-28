@@ -10,7 +10,7 @@ random_telegramlinks = f'https://telegramlink.in/{choice(["dv8uz1", "QopoBN2", "
 
 random_adrino = f'https://myprivatejobs.com/includes/open.php?id={choice(list(set(range(5982514, 5982616 + 1)) - {5982605, 5982566, 5982525}))}'
 
-random_nanolinks = f'https://computerpedia.in/includes/open.php?id={choice(list(set(range(1104558, 1104658 + 1)) - {1104591}))}'
+random_nanolinks = f'https://advicefunda.com/includes/open.php?id={choice(list(set(range(1104558, 1104658 + 1)) - {1104591}))}'
 
 random_teraboxlinks = f'https://financialstudy.me/includes/open.php?id={choice(list(set(range(2962664, 2962764 + 1)) - {2962722}))}'
 
