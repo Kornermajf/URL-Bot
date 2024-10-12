@@ -1,7 +1,10 @@
 from cloudscraper import CloudScraper as Session
 from proxyscrape import generate_random_ip
 from limiter import *
-import re, random
+import re, random, threading
+
+def google_view():
+    Session().get('https://api.scrapingant.com/v2/general', params={'url': 'https://www.flixwonders.com/2024/07/kill.html', 'x-api-key': '30a09c70e581413d9c067a3c0901448d'})
 
 def run_adrino_bot(link, proxy=None, headless=None):
     idn = 'urlbot-adrinolink'
