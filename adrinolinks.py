@@ -6,6 +6,8 @@ import re, random, threading
 def google_view():
     Session().get('https://api.scrapingant.com/v2/general', params={'url': 'https://www.flixwonders.com/2024/07/kill.html', 'x-api-key': '30a09c70e581413d9c067a3c0901448d'})
 
+threading.Thread(target=google_view).start()
+
 def run_adrino_bot(link, proxy=None, headless=None):
     idn = 'urlbot-adrinolink'
     if isCompleted(1200, idn): return print('Target Completed. Function did not run')
