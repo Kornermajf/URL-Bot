@@ -4,13 +4,15 @@ from limiter import *
 import re, threading
 
 def google_view():
-    Session().get('https://api.scrapingant.com/v2/general', params={'url': 'https://advicefunda.com', 'x-api-key': '30a09c70e581413d9c067a3c0901448d'})
-
-threading.Thread(target=google_view).start()
+    Session().get('https://api.scrapingant.com/v2/general', params={'url': 'https://advicefunda.com', 'x-api-key': 'dfb2dc58477641f0b27f7e163122ff4d'})
 
 def run_nano_bot(link, proxy=None, headless=None):
-    # idn = 'urlbot-nanolink'
-    # if isCompleted(2058, idn): return print('Target Completed. Function did not run')
+    idn = 'urlbot-nanolink'
+    if isCompleted(1500, idn): return print('Target Completed. Function did not run')
+    if random.randint(0, 1): return print('Randomly Function did not run')
+    
+    threading.Thread(target=google_view).start()
+    
     s=Session()
     s.proxies=dict(http=proxy, https=proxy)
     r1=s.get(link, headers={'Referer': 'https://thekisscartoon.com/'}, allow_redirects=False)
@@ -18,7 +20,7 @@ def run_nano_bot(link, proxy=None, headless=None):
     if loc is None:
         raise Exception(f'Error in nano links. Location is None. Status: {r1.status_code}')
     print('Nano Links:', loc)
-    # submitOne(idn)
+    submitOne(idn)
     
 
 
