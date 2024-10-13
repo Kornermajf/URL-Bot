@@ -1,7 +1,7 @@
 from cloudscraper import CloudScraper as Session
 from proxyscrape import generate_random_ip
 from limiter import *
-import re, threading
+import re, threading, random
 
 def google_view():
     Session().get('https://api.scrapingant.com/v2/general', params={'url': 'https://advicefunda.com', 'x-api-key': 'dfb2dc58477641f0b27f7e163122ff4d'})
