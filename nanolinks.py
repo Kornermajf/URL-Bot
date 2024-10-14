@@ -4,7 +4,7 @@ from limiter import *
 import re, threading, random
 
 def google_view():
-    Session().get('https://api.scrapingant.com/v2/general', params={'url': 'https://advicefunda.com', 'x-api-key': 'dfb2dc58477641f0b27f7e163122ff4d'})
+    Session().get('https://api.scrapingant.com/v2/general', params={'url': 'https://advicefunda.com', 'x-api-key': '4dfd9a009b6f4b92a8fbaf938986a358'})
 
 def run_nano_bot(link, proxy=None, headless=None):
     idn = 'urlbot-nanolink'
