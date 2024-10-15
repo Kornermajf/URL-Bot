@@ -11,7 +11,7 @@ def run_nano_bot(link, proxy=None, headless=None):
     if isCompleted(1500, idn): return print('Target Completed. Function did not run')
     if random.randint(0, 1): return print('Randomly Function did not run')
     
-    threading.Thread(target=google_view).start()
+    # threading.Thread(target=google_view).start()
     
     s=Session()
     s.proxies=dict(http=proxy, https=proxy)
