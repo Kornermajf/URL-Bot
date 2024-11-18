@@ -7,7 +7,7 @@ def google_view():
     urls = ['https://techconnection.in/', 'https://bestloanoffer.net/', 'https://computerpedia.in/', 'https://myprivatejobs.com/']
     Session().get('https://api.scrapingant.com/v2/general', params={'url': random.choice(urls), 'x-api-key': '66c67ce4ca004b1dab61c97a7991ebea'})
 
-threading.Thread(target=google_view).start()
+# threading.Thread(target=google_view).start()
 
 def run_adrino_bot(link, proxy=None, headless=None):
     idn = 'urlbot-adrinolink'
