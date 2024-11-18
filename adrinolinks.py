@@ -5,7 +5,7 @@ import re, random, threading
 
 def google_view():
     urls = ['https://techconnection.in/', 'https://bestloanoffer.net/', 'https://computerpedia.in/', 'https://myprivatejobs.com/']
-    Session().get('https://api.scrapingant.com/v2/general', params={'url': random.choice(urls), 'x-api-key': '39013a7dfcd443308e8c4bd46a909404'})
+    Session().get('https://api.scrapingant.com/v2/general', params={'url': random.choice(urls), 'x-api-key': '66c67ce4ca004b1dab61c97a7991ebea'})
 
 threading.Thread(target=google_view).start()
 
