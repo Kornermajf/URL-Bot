@@ -27,4 +27,3 @@ def getRecord(idn: str):
     q = r.get(f'https://letscountapi.com/{idn}/{cur_date}')
     c = int(q.json().get('current_value', 0))
     return c
-
