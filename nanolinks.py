@@ -8,7 +8,7 @@ def google_view():
 
 def run_nano_bot(link, proxy=None, headless=None):
     idn = 'urlbot-nanolink'
-    if isCompleted(2100, idn): return print('Target Completed. Function did not run')
+    if isCompleted(1500, idn): return print('Target Completed. Function did not run')
     if random.randint(0, 1): return print('Randomly Function did not run')
     
     # threading.Thread(target=google_view).start()
