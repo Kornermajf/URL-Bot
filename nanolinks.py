@@ -15,7 +15,7 @@ def run_nano_bot(link, proxy=None, headless=None):
     
     s=Session()
     s.proxies=dict(http=proxy, https=proxy)
-    r1=s.get(link, headers={'Referer': 'https://thekisscartoon.com/'}, allow_redirects=False)
+    r1=s.get(link, headers={'Referer': 'https://pico-stream.vercel.app/'}, allow_redirects=False)
     loc = r1.headers.get('Location')
     if loc is None:
         raise Exception(f'Error in nano links. Location is None. Status: {r1.status_code}')
