@@ -12,7 +12,7 @@ random_adrino = f'https://techconnection.in/includes/open.php?id={choice(list(se
 
 random_nanolinks = f'https://advicefunda.com/includes/open.php?id={choice(list(set(range(1104558, 1104658 + 1)) - {1104591}))}'
 
-random_teraboxlinks = f'https://financialstudy.me/includes/open.php?id={choice(list(set(range(2962664, 2962764 + 1)) - {2962722}))}'
+random_teraboxlinks = f'https://moneymatteronline.com/includes/open.php?id={choice(list(set(range(2962664, 2962764 + 1)) - {2962722}))}'
 
 random_zagl = f'https://za.gl/tzpost{randint(1,70)}'
 
