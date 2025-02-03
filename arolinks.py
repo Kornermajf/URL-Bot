@@ -41,11 +41,12 @@ def run_arolink_bot(proxy=None, headless=None):
     if isCompleted(720, idn): return print('Target Completed. Function did not run.')
     link = getLink()
     try:
-      ref, cookies = getRef(link, proxy)
+      rcData = getRef(link, proxy)
     except Exception as e:
       if 'IP Blocked' in str(e):
         print('IP is blocked. Using or changing proxy...')
         return run_arolink_bot(get_session())
+    ref, cookies = rcData
     s = Session()
     s.proxies = dict(http=proxy, https=proxy)
     for c in cookies: s.cookies.set(c.name, c.value, domain=c.domain)
