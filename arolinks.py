@@ -34,7 +34,7 @@ def getRef(link='https://arolinks.com/14x', proxy=None):
   try:
     ref = urljoin(r.url, doc.select_one('a[href]')['href']).split('verify.php')[0]
   except TypeError:
-    raise Exception('Link not present. HTML:\n' + r.text)
+    raise Exception(f'Link (in {link}) not present. HTML:\n{r.text}')
   return (ref, r.cookies)
 
 
