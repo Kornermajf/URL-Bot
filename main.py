@@ -27,7 +27,7 @@ def addToDB():
     ip = Session().get('https://ip.oxylabs.io').text.replace('\n', '')
     return 'true' in Session().get('https://ip-limiter-server.onrender.com/add?ip=' + ip).text
 
-# threading.excepthook=excepthook
+threading.excepthook=excepthook
 
 def main(proxy=None, **kw):
     t=[]
