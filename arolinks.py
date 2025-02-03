@@ -31,13 +31,16 @@ def getRef(link='https://arolinks.com/14x', proxy=None):
   if 'Turn off VPN' in r.text:
     raise Exception('IP Blocked. Using Proxy to get referer...')
   doc = BeautifulSoup(r.text, 'html.parser')
-  ref = urljoin(r.url, doc.select_one('a[href]')['href']).split('verify.php')[0]
+  try:
+    ref = urljoin(r.url, doc.select_one('a[href]')['href']).split('verify.php')[0]
+  except TypeError:
+    raise Exception('Link not present. HTML:\n' + r.text)
   return (ref, r.cookies)
 
 
 def run_arolink_bot(proxy=None, headless=None):
     idn = 'urlbot-arolink'
-    if random.choice([0, 0, 1]): return print('Randomly Function did not run.')
+    # if random.choice([0, 0, 1]): return print('Randomly Function did not run.')
     if isCompleted(720, idn): return print('Target Completed. Function did not run.')
     link = getLink()
     try:
