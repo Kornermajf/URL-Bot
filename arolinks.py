@@ -24,7 +24,6 @@ def getLink(usePr = False):
   data = dict(api='586850b580ee1e57b387721e1bc33e4c77f1f323', url=unlockUrl)
   for inp in doc.select('form input[name][value]'): data[inp['name']] = inp['value']
   r = s.post(apiUrl, data=data, allow_redirects=False)
-  print(f'r.text: {r.text}, loc: {r.headers.get("Location")}')
   link = urljoin(apiUrl, r.headers.get('Location'))
   return link
 
