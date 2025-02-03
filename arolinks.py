@@ -32,7 +32,7 @@ def getRef(link='https://arolinks.com/14x', proxy=None):
     raise Exception('IP Blocked. Using Proxy to get referer...')
   doc = BeautifulSoup(r.text, 'html.parser')
   ref = urljoin(r.url, doc.select_one('a[href]')['href']).split('verify.php')[0]
-  return ref, r.cookies
+  return (ref, r.cookies)
 
 
 def run_arolink_bot(proxy=None, headless=None):
@@ -41,12 +41,12 @@ def run_arolink_bot(proxy=None, headless=None):
     if isCompleted(720, idn): return print('Target Completed. Function did not run.')
     link = getLink()
     try:
-      rcData = getRef(link, proxy)
+      ref, cookies = getRef(link, proxy)
     except Exception as e:
       if 'IP Blocked' in str(e):
         print('IP is blocked. Using or changing proxy...')
         return run_arolink_bot(get_session())
-    ref, cookies = rcData
+      raise e
     s = Session()
     s.proxies = dict(http=proxy, https=proxy)
     for c in cookies: s.cookies.set(c.name, c.value, domain=c.domain)
