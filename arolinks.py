@@ -6,14 +6,20 @@ import requests, random
 from time import sleep
 from limiter import *
 
-def getLink():
+def getLink(usePr = False):
   s = Session()
-  r = s.get('https://pico-stream.vercel.app/')
-  doc = BeautifulSoup(r.text, 'html.parser')
-  e = random.choice(doc.select('.item[href]'))
-  unlockUrl = urljoin(r.url, e['href']) + '/unlock'
-  apiUrl = 'https://arolinks.com/st?api=586850b580ee1e57b387721e1bc33e4c77f1f323&url=' + unlockUrl
-  r = s.get(apiUrl)
+  if usePr:
+    pr = get_session()
+    s.proxies = dict(http=pr, https=pr)
+  try:
+    r = s.get('https://pico-stream.vercel.app/')
+    doc = BeautifulSoup(r.text, 'html.parser')
+    e = random.choice(doc.select('.item[href]'))
+    unlockUrl = urljoin(r.url, e['href']) + '/unlock'
+    apiUrl = 'https://arolinks.com/st?api=586850b580ee1e57b387721e1bc33e4c77f1f323&url=' + unlockUrl
+    r = s.get(apiUrl)
+    if 'Attention Required' in r.text: return getLink(1)
+  except requests.exceptions.ProxyError: return getLink(usePr)
   doc = BeautifulSoup(r.text, 'html.parser')
   data = dict(api='586850b580ee1e57b387721e1bc33e4c77f1f323', url=unlockUrl)
   for inp in doc.select('form input[name][value]'): data[inp['name']] = inp['value']
