@@ -1,9 +1,10 @@
 from cloudscraper import CloudScraper as Session
 from all_links import *
 # from telegramlinks import run_telegram_bot
-from teraboxlinks import run_terabox_bot
-from nanolinks import run_nano_bot
-from adrinolinks import run_adrino_bot
+from arolinks import run_arolink_bot
+# from teraboxlinks import run_terabox_bot
+# from nanolinks import run_nano_bot
+# from adrinolinks import run_adrino_bot
 # from kingurl import run_kingurl_bot
 # from udlinks import run_udlinks_bot
 # from malink import run_malink_bot
@@ -30,8 +31,9 @@ threading.excepthook=excepthook
 
 def main(proxy=None, **kw):
     t=[]
-    t.append(Thread(target=lambda: run_terabox_bot(random_teraboxlinks, proxy, **kw)))
-    t.append(Thread(target=lambda: run_nano_bot(random_nanolinks, proxy, **kw)))
+    # t.append(Thread(target=lambda: run_terabox_bot(random_teraboxlinks, proxy, **kw)))
+    # t.append(Thread(target=lambda: run_nano_bot(random_nanolinks, proxy, **kw)))
+    t.append(Thread(target=lambda: run_arolink_bot(proxy, **kw)))
     # t.append(Thread(target=lambda: run_adrino_bot(random_adrino, proxy, **kw)))
     # t.append(Thread(target=lambda: run_udlinks_bot(random_udlinks, proxy, **kw)))
     # t.append(Thread(target=lambda: run_malink_bot(random_malink, proxy, **kw)))
