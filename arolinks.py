@@ -25,6 +25,7 @@ def getLink(usePr = False):
   for inp in doc.select('form input[name][value]'): data[inp['name']] = inp['value']
   r = s.post(apiUrl, data=data, allow_redirects=False)
   link = urljoin(apiUrl, r.headers.get('Location'))
+  if 'st?api' in link: return getLink(1)
   return link
 
 
