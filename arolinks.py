@@ -47,7 +47,7 @@ def getRef(link='https://arolinks.com/14x', proxy=None):
 
 def run_arolink_bot(proxy=None, headless=None):
     idn = 'urlbot-arolink'
-    if random.choice([1, 0]): return print('Randomly Function did not run.')
+    if random.choice([1, 1, 0]): return print('Randomly Function did not run.')
     if isCompleted(720, idn): return print('Target Completed. Function did not run.')
     link = getLink()
     try:
