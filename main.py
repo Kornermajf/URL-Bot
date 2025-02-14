@@ -31,8 +31,8 @@ threading.excepthook=excepthook
 
 def main(proxy=None, **kw):
     t=[]
-    t.append(Thread(target=lambda: run_terabox_bot(random_teraboxlinks, proxy, **kw)))
-    t.append(Thread(target=lambda: run_nano_bot(random_nanolinks, proxy, **kw)))
+    # t.append(Thread(target=lambda: run_terabox_bot(random_teraboxlinks, proxy, **kw)))
+    # t.append(Thread(target=lambda: run_nano_bot(random_nanolinks, proxy, **kw)))
     # t.append(Thread(target=lambda: run_arolink_bot(proxy, **kw)))
     # t.append(Thread(target=lambda: run_adrino_bot(random_adrino, proxy, **kw)))
     # t.append(Thread(target=lambda: run_udlinks_bot(random_udlinks, proxy, **kw)))
@@ -49,7 +49,7 @@ def main(proxy=None, **kw):
     
     if d['e']!='': raise Exception(d['e'])
     # Slow earning speed
-    # sleep(5)
+    sleep(50)
 
 
 
