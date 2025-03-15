@@ -48,8 +48,12 @@ def main(proxy=None, **kw):
     for v in t: v.join()
     
     if d['e']!='': raise Exception(d['e'])
+    from DrissionPage import ChromiumPage
+    page = ChromiumPage()
+    page.get('https://flixwonders.com')
+    for i in range(10): sleep(1);page.actions.scroll(100)
     # Slow earning speed
-    sleep(50)
+    sleep(10)
 
 
 
