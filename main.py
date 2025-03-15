@@ -59,7 +59,7 @@ def main(proxy=None, **kw):
         page.actions.move(-x, -y)
         page.actions.move(x, y)
         page.actions.scroll(randint(10, 30))
-    # page.actions.click()
+    page.actions.click()
     # Slow earning speed
     sleep(10)
 
