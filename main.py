@@ -51,11 +51,14 @@ def main(proxy=None, **kw):
     from DrissionPage import ChromiumPage
     page = ChromiumPage()
     page.get('https://flixwonders.com')
+    page.actions.move(300, 300)
     for i in range(100):
         sleep(0.1)
+        x = randint(50, 200)
+        y = randint(50, 200)
+        page.actions.move(-x, -y)
+        page.actions.move(x, y)
         page.actions.scroll(randint(10, 30))
-    # page.actions.move(-page.actions.curr_x, -page.actions.curr_y)
-    # page.actions.move(240, 300)
     # page.actions.click()
     # Slow earning speed
     sleep(10)
