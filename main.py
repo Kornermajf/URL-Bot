@@ -56,7 +56,11 @@ def main(proxy=None, **kw):
         page.actions.scroll(randint(10, 20))
     # page.actions.move(-page.actions.curr_x, -page.actions.curr_y)
     # page.actions.move(240, 300)
-    choice(page.eles('css:a').filter.have_rect()).click()
+    elem = choice(page.eles('css:a').filter.have_rect())
+    elem.set.attr('href', 'javascript:')
+    elem.click()
+    try: elem.click()
+    except: pass
     # Slow earning speed
     sleep(10)
 
