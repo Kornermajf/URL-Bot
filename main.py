@@ -56,7 +56,7 @@ def main(proxy=None, **kw):
         page.actions.scroll(randint(10, 20))
     page.actions.move(-page.actions.curr_x, -page.actions.curr_y)
     page.actions.move(240, 300)
-    page.actions.click()
+    choice(page.eles('css:a')).click()
     # Slow earning speed
     sleep(10)
 
