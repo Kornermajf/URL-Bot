@@ -48,21 +48,21 @@ def main(proxy=None, **kw):
     for v in t: v.join()
     
     if d['e']!='': raise Exception(d['e'])
-    from DrissionPage import ChromiumPage, ChromiumOptions
-    page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized'))
-    page.get('https://flixwonders.com')
-    for i in range(100):
-        sleep(0.3)
-        page.actions.scroll(randint(10, 20))
+    # from DrissionPage import ChromiumPage, ChromiumOptions
+    # page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized'))
+    # page.get('https://flixwonders.com')
+    # for i in range(100):
+    #     sleep(0.3)
+    #     page.actions.scroll(randint(10, 20))
     # page.actions.move(-page.actions.curr_x, -page.actions.curr_y)
     # page.actions.move(240, 300)
-    elem = choice(page.eles('css:a').filter.have_rect())
-    elem.set.attr('href', 'javascript:')
-    elem.click()
-    try: elem.click()
-    except: pass
+    # elem = choice(page.eles('css:a').filter.have_rect())
+    # elem.set.attr('href', 'javascript:')
+    # elem.click()
+    # try: elem.click()
+    # except: pass
     # Slow earning speed
-    sleep(10)
+    sleep(30)
 
 
 
