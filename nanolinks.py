@@ -74,7 +74,7 @@ def run_nano_bot_browser():
         print('NanoLinks:', rLink)
         oldPage.quit()
     except Exception as err:
-        ss = oldPage.get_screenshot(as_bytes=True, full_page=True)
+        ss = page.get_screenshot(as_bytes=True, full_page=True)
         url = Session().post('https://freeimage.host/api/1/upload', params=dict(key='6d207e02198a847aa98d0a2a901485a5'), files=dict(source=ss)).json().get('image', {}).get('url')
         raise Exception(traceback.format_exc() + '\n\nScreenshot: ' + url)
 
