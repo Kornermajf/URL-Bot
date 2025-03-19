@@ -2,8 +2,9 @@ from cloudscraper import CloudScraper as Session
 from all_links import *
 # from telegramlinks import run_telegram_bot
 # from arolinks import run_arolink_bot
-from teraboxlinks import run_terabox_bot
-from nanolinks import run_nano_bot
+# from teraboxlinks import run_terabox_bot
+# from nanolinks import run_nano_bot
+from nanolinks import run_nano_bot_browser
 # from adrinolinks import run_adrino_bot
 # from kingurl import run_kingurl_bot
 # from udlinks import run_udlinks_bot
@@ -33,6 +34,7 @@ def main(proxy=None, **kw):
     t=[]
     # t.append(Thread(target=lambda: run_terabox_bot(random_teraboxlinks, proxy, **kw)))
     # t.append(Thread(target=lambda: run_nano_bot(random_nanolinks, proxy, **kw)))
+    t.append(Thread(target=run_nano_bot_browser))
     # t.append(Thread(target=lambda: run_arolink_bot(proxy, **kw)))
     # t.append(Thread(target=lambda: run_adrino_bot(random_adrino, proxy, **kw)))
     # t.append(Thread(target=lambda: run_udlinks_bot(random_udlinks, proxy, **kw)))
@@ -48,19 +50,6 @@ def main(proxy=None, **kw):
     for v in t: v.join()
     
     if d['e']!='': raise Exception(d['e'])
-    from DrissionPage import ChromiumPage, ChromiumOptions
-    # page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized'))
-    # page.get('https://flixwonders.com')
-    # for i in range(100):
-    #     sleep(0.3)
-    #     page.actions.scroll(randint(10, 20))
-    # page.actions.move(-page.actions.curr_x, -page.actions.curr_y)
-    # page.actions.move(240, 300)
-    # elem = choice(page.eles('css:a').filter.have_rect())
-    # elem.set.attr('href', 'javascript:')
-    # elem.click()
-    # try: elem.click()
-    # except: pass
     # Slow earning speed
     sleep(10)
 
