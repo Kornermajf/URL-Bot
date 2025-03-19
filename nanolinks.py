@@ -46,8 +46,7 @@ def run_nano_bot_browser():
     while 1:
         sleep(1)
         if not 'Just a moment' in page.title: break
-    sleep(1)
-    page.wait.doc_loaded()
+    sleep(3)
     while 'Bot Verification' in page.title:
         iframe = page.ele('css:iframe[title="reCAPTCHA"]')
         iframe.ele('css:#rc-anchor-container span[role="checkbox"]').click()
@@ -55,7 +54,9 @@ def run_nano_bot_browser():
         iframe.ele('css:div.button-holder.help-button-holder').shadow_root.ele('#solver-button').click()
         sleep(10)
     page.wait.doc_loaded()
-    page.ele('css:.fc-cta-consent').click()
+    try: page.ele('css:.fc-cta-consent').click()
+    except Exception as err:
+        if 'No element' in str(err): pass
     sleep(1)
     scrollAllOver()
     try: page.ele('css:#popup .close').click()
