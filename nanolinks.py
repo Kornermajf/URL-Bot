@@ -21,8 +21,9 @@ def run_nano_bot(link, proxy=None, headless=None):
     submitOne(idn)
     
 def run_nano_bot_browser():
+    try: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').auto_port().add_extension('./BusterExt'))
+    except: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').auto_port().add_extension('./BusterExt'))
     try:
-        page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').auto_port().add_extension('./BusterExt'))
         oldPage = page
         page.get('https://hyperapks.xyz/wp-sitemap-posts-post-1.xml')
         link = random.choice(page.eles('css:.loc a')).attr('href')
@@ -68,8 +69,13 @@ def run_nano_bot_browser():
         try: page.ele('css:#popup .close').click()
         except: pass
         link = re.findall(r'window\.location\.href\s*=\s*"([^"]+)"', page.html)[0].strip()
-        pr = get_session()
-        r = Session().get(link, headers={'Referer': page.url}, proxies=dict(http=pr, https=pr), allow_redirects=False)
+        for i in range(2 + 1):
+            try:
+                pr = get_session()
+                r = Session().get(link, headers={'Referer': page.url}, proxies=dict(http=pr, https=pr), allow_redirects=False)
+                break
+            except Exception as err:
+                if i == 2: raise err
         rLink = r.headers.get('Location')
         print('NanoLinks:', rLink)
         oldPage.quit()
