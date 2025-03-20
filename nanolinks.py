@@ -41,13 +41,13 @@ def run_nano_bot_browser():
                 page.actions.scroll(step)
                 currScroll += step
                 sleep(random.uniform(0.1, 1.5) / speed)
-        scrollAllOver(1.8)
+        scrollAllOver(2)
         for i in range(10+1):
-            try: page.ele('css:.downloadAPK.dapk_b', timeout=10).click();break
+            try: page.ele('css:.downloadAPK.dapk_b', timeout=10).click(by_js=True);break
             except errors.NoRectError as err:
                 if i == 10: raise err
                 sleep(1)
-        sleep(0.5)
+        sleep(1)
         page = page.latest_tab
         page.wait.doc_loaded()
         while 1:
