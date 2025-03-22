@@ -25,8 +25,8 @@ def run_nano_bot_browser():
     except: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').auto_port().add_extension('./BusterExt'))
     try:
         oldPage = page
-        page.get('https://hyperapks.xyz/wp-sitemap-posts-post-1.xml')
-        link = random.choice(page.eles('css:.loc a')).attr('href')
+        page.get('https://hyperapks.xyz/post-sitemap.html')
+        link = random.choice(page.eles('css:#content a')).attr('href')
         page.get('https://www.google.com')
         page.run_js(f"window.location.href='{link}'")
         page.wait.load_start(10, False)
