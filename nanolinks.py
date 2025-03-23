@@ -1,7 +1,7 @@
 from cloudscraper import CloudScraper as Session
 from proxyscrape import get_session
 from DrissionPage import ChromiumPage, ChromiumOptions, errors
-import re, threading, random, traceback
+import re, threading, random, traceback, json
 from time import sleep
 from limiter import *
 
@@ -25,8 +25,7 @@ def run_nano_bot_browser():
     except: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').auto_port().add_extension('./BusterExt'))
     try:
         oldPage = page
-        page.get('https://hyperapks.xyz/post-sitemap.html')
-        link = random.choice(page.eles('css:#content a')).attr('href')
+        link = random.choice(json.load(open('post_links.json')))
         page.get('https://www.google.com')
         page.run_js(f"window.location.href='{link}'")
         page.wait.load_start(10, False)
