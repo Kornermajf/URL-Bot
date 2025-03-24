@@ -21,8 +21,8 @@ def run_nano_bot(link, proxy=None, headless=None):
     submitOne(idn)
     
 def run_nano_bot_browser():
-    try: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').auto_port().add_extension('./BusterExt'))
-    except: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').auto_port().add_extension('./BusterExt'))
+    try: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').auto_port().add_extension('./ProxyExt'))
+    except: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').auto_port().add_extension('./ProxyExt'))
     try:
         oldPage = page
         link = random.choice(json.load(open('post_links.json')))
