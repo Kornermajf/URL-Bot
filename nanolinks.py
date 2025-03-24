@@ -47,6 +47,7 @@ def run_nano_bot_browser():
                 if i == 10: raise err
                 sleep(1)
         sleep(1)
+        return
         page = page.latest_tab
         page.wait.doc_loaded()
         while 1:
