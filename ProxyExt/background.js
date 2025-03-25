@@ -5,18 +5,16 @@ chrome.proxy.settings.set(
       pacScript: {
         data: `
           function FindProxyForURL(url, host) {
-            var auth = "PROXY USER:PASS@HOST:PORT";
-            var auth2 = "PROXY sdrhsdfh:dfhfh@127.0.0.1:8583";
-
             if (
-              dnsDomainIs(host, "google-analytics.com") ||
-              dnsDomainIs(host, "analytics.google.com") || true
+              host.indexOf('google-analytics.com') != -1 ||
+              host.indexOf('analytics.google.com') != -1
             ) {
-              return auth;
+              return "PROXY 127.0.0.1:5855";
             }
             return "DIRECT";
           }
         `,
+        mandatory: true,
       },
     },
     scope: "regular",

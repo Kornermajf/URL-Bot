@@ -1,23 +1,21 @@
 from cloudscraper import CloudScraper as Session
 from proxyscrape import get_session
+from requests import get
 from DrissionPage import ChromiumPage, ChromiumOptions, errors
-import re, random, traceback, json, atexit
+import re, random, traceback, json, atexit, subprocess, socket
 from time import sleep
 from limiter import *
 
 pr = get_session()
 USER, PASS, HOST, PORT = re.findall(r'^[^:]+:\/\/([^:]+):([^@]+)@([^:]+):(\d+)$', pr)[0]
+p = subprocess.Popen(f'mitmdump --mode upstream:http://{HOST}:{PORT} --upstream-auth {USER}:{PASS} --listen-port 5858'.split(), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+atexit.register(p.kill)
+while 1:
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.settimeout(10)
+        if s.connect_ex(('127.0.0.1', 5858)) == 0: break
+    sleep(1)
 
-def setExtProxy():
-    with open('./ProxyExt/background.js') as f: d = f.read()
-    with open('./ProxyExt/background.js', 'w') as f: f.write(d.replace('USER', USER).replace('PASS', PASS).replace('HOST', HOST).replace('PORT', PORT))
-
-def unsetExtProxy():
-    with open('./ProxyExt/background.js') as f: d = f.read()
-    with open('./ProxyExt/background.js', 'w') as f: f.write(d.replace(USER, 'USER').replace(PASS, 'PASS').replace(HOST, 'HOST').replace(PORT, 'PORT'))
-
-setExtProxy()
-atexit.register(unsetExtProxy)
 
 def run_nano_bot(link, proxy=None, headless=None):
     idn = 'urlbot-nanolink'
@@ -34,8 +32,8 @@ def run_nano_bot(link, proxy=None, headless=None):
     submitOne(idn)
     
 def run_nano_bot_browser():
-    try: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').auto_port().add_extension('./ProxyExt'))
-    except: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').auto_port().add_extension('./ProxyExt'))
+    try: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').set_argument('--ignore-certificate-errors').auto_port().add_extension('./ProxyExt'))
+    except: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').set_argument('--ignore-certificate-errors').auto_port().add_extension('./ProxyExt'))
     try:
         oldPage = page
         link = random.choice(json.load(open('post_links.json')))

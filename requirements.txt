@@ -5,3 +5,4 @@ aiohttp
 asyncio
 aiohttp-proxy
 DrissionPage
+mitmproxy
