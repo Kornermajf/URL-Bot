@@ -11,10 +11,12 @@ USER, PASS, HOST, PORT = re.findall(r'^[^:]+:\/\/([^:]+):([^@]+)@([^:]+):(\d+)$'
 def setExtProxy():
     with open('./ProxyExt/background.js') as f: d = f.read()
     with open('./ProxyExt/background.js', 'w') as f: f.write(d.replace('USER', USER).replace('PASS', PASS).replace('HOST', HOST).replace('PORT', PORT))
+
 def unsetExtProxy():
     with open('./ProxyExt/background.js') as f: d = f.read()
     with open('./ProxyExt/background.js', 'w') as f: f.write(d.replace(USER, 'USER').replace(PASS, 'PASS').replace(HOST, 'HOST').replace(PORT, 'PORT'))
 
+setExtProxy()
 atexit.register(unsetExtProxy)
 
 def run_nano_bot(link, proxy=None, headless=None):
