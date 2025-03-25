@@ -1,10 +1,21 @@
 from cloudscraper import CloudScraper as Session
 from proxyscrape import get_session
 from DrissionPage import ChromiumPage, ChromiumOptions, errors
-import re, threading, random, traceback, json
+import re, random, traceback, json, atexit
 from time import sleep
 from limiter import *
 
+pr = get_session()
+USER, PASS, HOST, PORT = re.findall(r'^[^:]+:\/\/([^:]+):([^@]+)@([^:]+):(\d+)$', pr)[0]
+
+def setExtProxy():
+    with open('./ProxyExt/background.js') as f: d = f.read()
+    with open('./ProxyExt/background.js', 'w') as f: f.write(d.replace('USER', USER).replace('PASS', PASS).replace('HOST', HOST).replace('PORT', PORT))
+def unsetExtProxy():
+    with open('./ProxyExt/background.js') as f: d = f.read()
+    with open('./ProxyExt/background.js', 'w') as f: f.write(d.replace(USER, 'USER').replace(PASS, 'PASS').replace(HOST, 'HOST').replace(PORT, 'PORT'))
+
+atexit.register(unsetExtProxy)
 
 def run_nano_bot(link, proxy=None, headless=None):
     idn = 'urlbot-nanolink'
@@ -21,12 +32,12 @@ def run_nano_bot(link, proxy=None, headless=None):
     submitOne(idn)
     
 def run_nano_bot_browser():
-    try: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').auto_port().add_extension('./ProxyExt'))
-    except: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').auto_port().add_extension('./ProxyExt'))
+    try: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').auto_port()) #.add_extension('./ProxyExt')
+    except: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').auto_port()) #.add_extension('./ProxyExt')
     try:
         oldPage = page
         link = random.choice(json.load(open('post_links.json')))
-        page.get('https://www.google.com')
+        page.get(f'https://{random.choice(["google.com", "facebook.com", "instagram.com", "bing.com"])}/robots.txt')
         page.run_js(f"window.location.href='{link}'")
         page.wait.load_start(10, False)
         page.wait.doc_loaded()
@@ -47,6 +58,7 @@ def run_nano_bot_browser():
                 if i == 10: raise err
                 sleep(1)
         sleep(1)
+        oldPage.quit()
         return
         page = page.latest_tab
         page.wait.doc_loaded()
@@ -69,13 +81,7 @@ def run_nano_bot_browser():
         try: page.ele('css:#popup .close').click()
         except: pass
         link = re.findall(r'window\.location\.href\s*=\s*"([^"]+)"', page.html)[0].strip()
-        for i in range(2 + 1):
-            try:
-                pr = get_session()
-                r = Session().get(link, headers={'Referer': page.url}, proxies=dict(http=pr, https=pr), allow_redirects=False)
-                break
-            except Exception as err:
-                if i == 2: raise err
+        r = Session().get(link, headers={'Referer': page.url}, proxies=dict(http=pr, https=pr), allow_redirects=False)
         rLink = r.headers.get('Location')
         print('NanoLinks:', rLink)
         oldPage.quit()
