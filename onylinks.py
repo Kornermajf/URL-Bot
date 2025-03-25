@@ -1,8 +1,7 @@
-from cloudscraper import CloudScraper as Session
-from proxyscrape import get_session
-from requests import get
 from DrissionPage import ChromiumPage, ChromiumOptions, errors
 import re, random, traceback, json, atexit, subprocess, socket
+from cloudscraper import CloudScraper as Session
+from proxyscrape import get_session
 from time import sleep
 from limiter import *
 
@@ -16,22 +15,8 @@ while 1:
         if s.connect_ex(('127.0.0.1', 5858)) == 0: break
     sleep(1)
 
-
-def run_nano_bot(link, proxy=None, headless=None):
-    idn = 'urlbot-nanolink'
-    if isCompleted(2100, idn): return print('Target Completed. Function did not run')
-    if random.randint(0, 1): return print('Randomly Function did not run')
-    
-    s=Session()
-    s.proxies=dict(http=proxy, https=proxy)
-    r1=s.get(link, headers={'Referer': 'https://pico-stream.vercel.app/'}, allow_redirects=False)
-    loc = r1.headers.get('Location')
-    if loc is None:
-        raise Exception(f'Error in nano links. Location is None. Status: {r1.status_code}')
-    print('Nano Links:', loc)
-    submitOne(idn)
-    
-def run_nano_bot_browser():
+  
+def run_ony_bot_browser():
     try: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').set_argument('--ignore-certificate-errors').auto_port().add_extension('./ProxyExt'))
     except: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').set_argument('--ignore-certificate-errors').auto_port().add_extension('./ProxyExt'))
     try:
@@ -58,8 +43,6 @@ def run_nano_bot_browser():
                 if i == 10: raise err
                 sleep(1)
         sleep(1)
-        # oldPage.quit()
-        # return
         page = page.latest_tab
         page.wait.doc_loaded()
         scrollAllOver()
@@ -67,18 +50,14 @@ def run_nano_bot_browser():
         sleep(0.3)
         page.wait.doc_loaded()
         url = page.url
-        # oldPage.quit()
+        print(url)
+        oldPage.quit()
     except Exception as err:
         ss = page.get_screenshot(as_bytes=True, full_page=True)
         url = Session().post('https://freeimage.host/api/1/upload', params=dict(key='6d207e02198a847aa98d0a2a901485a5'), files=dict(source=ss)).json().get('image', {}).get('url')
         raise Exception(traceback.format_exc() + '\n\nScreenshot: ' + url)
-
-
-
-
+    
 
 if __name__=='__main__':
-    # from all_links import random_nanolinks
-    # run_nano_bot(random_nanolinks, get_session(), headless=False)
-    run_nano_bot_browser()
+    run_ony_bot_browser()
 
