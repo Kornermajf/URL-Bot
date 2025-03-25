@@ -9,7 +9,7 @@ chrome.proxy.settings.set(
               host.indexOf('google-analytics.com') != -1 ||
               host.indexOf('analytics.google.com') != -1
             ) {
-              return "PROXY 127.0.0.1:5855";
+              return "PROXY 127.0.0.1:5858";
             }
             return "DIRECT";
           }
