@@ -6,13 +6,13 @@ chrome.proxy.settings.set(
         data: `
           function FindProxyForURL(url, host) {
             var auth = "PROXY USER:PASS@HOST:PORT";
-            var auth2 = "PROXY user:pass@127.0.0.1:8583";
+            var auth2 = "PROXY sdrhsdfh:dfhfh@127.0.0.1:8583";
 
             if (
               dnsDomainIs(host, "google-analytics.com") ||
               dnsDomainIs(host, "analytics.google.com") || true
             ) {
-              return auth2;
+              return auth;
             }
             return "DIRECT";
           }
