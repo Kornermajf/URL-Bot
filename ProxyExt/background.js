@@ -10,7 +10,7 @@ chrome.proxy.settings.set(
 
             if (
               dnsDomainIs(host, "google-analytics.com") ||
-              dnsDomainIs(host, "analytics.google.com")
+              dnsDomainIs(host, "analytics.google.com") || true
             ) {
               return auth2;
             }
