@@ -58,8 +58,8 @@ def run_nano_bot_browser():
                 if i == 10: raise err
                 sleep(1)
         sleep(1)
-        oldPage.quit()
-        return
+        # oldPage.quit()
+        # return
         page = page.latest_tab
         page.wait.doc_loaded()
         while 1:
@@ -81,9 +81,9 @@ def run_nano_bot_browser():
         try: page.ele('css:#popup .close').click()
         except: pass
         link = re.findall(r'window\.location\.href\s*=\s*"([^"]+)"', page.html)[0].strip()
-        r = Session().get(link, headers={'Referer': page.url}, proxies=dict(http=pr, https=pr), allow_redirects=False)
-        rLink = r.headers.get('Location')
-        print('NanoLinks:', rLink)
+        # r = Session().get(link, headers={'Referer': page.url}, proxies=dict(http=pr, https=pr), allow_redirects=False)
+        # rLink = r.headers.get('Location')
+        # print('NanoLinks:', rLink)
         oldPage.quit()
     except Exception as err:
         ss = page.get_screenshot(as_bytes=True, full_page=True)
