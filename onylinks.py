@@ -34,6 +34,7 @@ def run_ony_bot_browser():
             totalHeight = page.run_js('return document.body.scrollHeight')
             currScroll = 0
             while currScroll < totalHeight:
+                totalHeight = page.run_js('return document.body.scrollHeight')
                 step = random.randint(50, 150) * speed
                 page.actions.scroll(step)
                 currScroll += step
@@ -62,9 +63,9 @@ def run_ony_bot_browser():
         isQuit = True
 
         s = Session()
-        s.proxies = dict(http=pr, https=pr)
         s.cookies.set('ab', '2', domain=url.split('/')[2])
         s.get(sLink, headers={'Referer': 'https://hyperapks.xyz/'}, stream=True)
+        s.proxies = dict(http=pr, https=pr)
         r = s.get(url, headers={'Referer': ref})
         d = BeautifulSoup(r.text, 'html.parser')
         data = { i.get('name') : i.get('value') for i in d.select('#go-link input[name]')}
