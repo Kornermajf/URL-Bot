@@ -24,7 +24,7 @@ def run_ony_bot_browser():
         oldPage = page
         isQuit = False
         link = random.choice(json.load(open('post_links.json')))
-        page.get(f'https://{random.choice(["google.com", "facebook.com", "instagram.com", "bing.com"])}/robots.txt')
+        page.get(f'https://{random.choice(["google.com", "google.com", "facebook.com", "instagram.com", "bing.com", "bing.com"])}/robots.txt')
         page.run_js(f"window.location.href='{link}'")
         page.wait.load_start(10, False)
         page.wait.doc_loaded()
