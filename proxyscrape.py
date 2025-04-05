@@ -3,12 +3,19 @@ from random import choices, randint, choice
 from string import ascii_letters, digits
 import requests, random, os
 
+def ultraChoice(l:list):
+    nl = []
+    for i in l:
+        for _ in range(randint(1, 10)):
+            nl.append(i)
+    return choice(nl)
+
 def get_session():
     pr = os.environ.get('PROXY_URL')
     if not pr: raise Exception('Set Environ Variable first!')
     pr = requests.get(pr).text.strip()
     countries = ['us', 'gb', 'au', 'ca', 'in', 'mx', 'nz']
-    country = choice(countries)
+    country = ultraChoice(countries)
     st = ''.join(choices(digits, k=randint(8,20)))
 
     # enable all country
