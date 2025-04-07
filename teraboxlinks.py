@@ -64,6 +64,8 @@ def run_tera_bot_browser():
         page = page.latest_tab
         page.wait.doc_loaded()
         while 'Just a moment' in page.title: sleep(3)
+        page.wait.doc_loaded()
+        sleep(3)
         page.run_js('''setInterval(()=>{document.querySelector('.fc-cta-consent')?.click()}, 1000)''')
         for i in range(10+1):
             try: page.ele('css:.fc-cta-consent').click();break
