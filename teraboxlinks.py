@@ -66,7 +66,8 @@ def run_tera_bot_browser():
         page.wait.doc_loaded()
 
         sleep(60)
-        page.quit()
+        oldPage.quit()
+        isQuit = True
         # while 'Just a moment' in page.title: sleep(3)
         # page.wait.doc_loaded()
         # sleep(3)
