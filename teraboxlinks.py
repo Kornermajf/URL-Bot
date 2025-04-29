@@ -52,9 +52,10 @@ def run_tera_bot_browser():
                 page.actions.scroll(step)
                 currScroll += step
                 sleep(random.uniform(0.1, 1.5) / speed)
-        scrollAllOver(2)
+        scrollAllOver(1)
         for i in range(10+1):
             try:
+                page.run_js('document.querySelector(".downloadAPK.dapk_b").href = "https://example.com/";')
                 page.ele('css:.downloadAPK.dapk_b', timeout=10).click(by_js=True)
                 break
             except errors.NoRectError as err:
@@ -63,24 +64,27 @@ def run_tera_bot_browser():
         sleep(1)
         page = page.latest_tab
         page.wait.doc_loaded()
-        while 'Just a moment' in page.title: sleep(3)
-        page.wait.doc_loaded()
-        sleep(3)
-        page.run_js('''setInterval(()=>{document.querySelector('.fc-cta-consent')?.click()}, 1000)''')
-        for i in range(10+1):
-            try: page.ele('css:.fc-cta-consent').click();break
-            except: pass
-        sleep(3)
-        scrollAllOver()
-        ref = page.url
-        furl = page.ele('#tp-snp2').attr('href')
-        oldPage.quit()
-        isQuit = True
 
-        r = Session().get(furl, headers={'Referer': ref, 'Origin': f'https://{ref.split("/")[2]}'}, allow_redirects=False, stream=True, proxies=dict(http=pr, https=pr))
-        loc = r.headers.get('Location')
-        if not loc: raise Exception('Error is teraboxlinks. No location found.')
-        print('Terabox Links:', loc)
+        sleep(60)
+        page.quit()
+        # while 'Just a moment' in page.title: sleep(3)
+        # page.wait.doc_loaded()
+        # sleep(3)
+        # page.run_js('''setInterval(()=>{document.querySelector('.fc-cta-consent')?.click()}, 1000)''')
+        # for i in range(10+1):
+        #     try: page.ele('css:.fc-cta-consent').click();break
+        #     except: pass
+        # sleep(3)
+        # scrollAllOver()
+        # ref = page.url
+        # furl = page.ele('#tp-snp2').attr('href')
+        # oldPage.quit()
+        # isQuit = True
+
+        # r = Session().get(furl, headers={'Referer': ref, 'Origin': f'https://{ref.split("/")[2]}'}, allow_redirects=False, stream=True, proxies=dict(http=pr, https=pr))
+        # loc = r.headers.get('Location')
+        # if not loc: raise Exception('Error is teraboxlinks. No location found.')
+        # print('Terabox Links:', loc)
     except Exception as err:
         if isQuit: raise err
         else:

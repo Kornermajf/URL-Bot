@@ -2,7 +2,7 @@ from cloudscraper import CloudScraper as Session
 from all_links import *
 # from telegramlinks import run_telegram_bot
 # from arolinks import run_arolink_bot
-# from teraboxlinks import run_tera_bot_browser
+from teraboxlinks import run_tera_bot_browser
 # from nanolinks import run_nano_bot
 # from nanolinks import run_nano_bot_browser
 # from onylinks import run_ony_bot_browser
@@ -35,7 +35,7 @@ def main(proxy=None, **kw):
     t=[]
     # t.append(Thread(target=lambda: run_terabox_bot(random_teraboxlinks, proxy, **kw)))
     # t.append(Thread(target=lambda: run_nano_bot(random_nanolinks, proxy, **kw)))
-    # t.append(Thread(target=run_tera_bot_browser))
+    t.append(Thread(target=run_tera_bot_browser))
     # t.append(Thread(target=lambda: run_arolink_bot(proxy, **kw)))
     # t.append(Thread(target=lambda: run_adrino_bot(random_adrino, proxy, **kw)))
     # t.append(Thread(target=lambda: run_udlinks_bot(random_udlinks, proxy, **kw)))
