@@ -54,6 +54,7 @@ def run_adrino_bot_browser():
             for i in range(10+1):
                 try:
                     ebtn = page.ele('css:#tp-snp2', timeout=10)
+                    cookies = json.loads(page.cookies(True).as_json())
                     if x != 4: ebtn.click(by_js=True)
                     else:
                         ref = page.url
@@ -67,12 +68,13 @@ def run_adrino_bot_browser():
         
         oldPage.quit()
         isQuit = True
-        for i in range(15):
-            pr = get_session()
-            r = Session().get(sLink, headers={'Referer': ref, 'Origin': f'https://{ref.split("/")[2]}'}, allow_redirects=False, stream=True, proxies=dict(http=pr, https=pr))
-            loc = r.headers.get('Location')
-            if not loc: raise Exception('Error in adrinolinks. No location found.')
-            print('Adrino Links:', loc)
+        s = Session()
+        for c in cookies:
+            s.cookies.set(c['name'], c['value'], domain=c['domain'])
+        r = s.get(sLink, headers={'Referer': ref}, allow_redirects=False, stream=True, proxies=dict(http=pr, https=pr))
+        loc = r.headers.get('Location')
+        if not loc: raise Exception('Error in adrinolinks. No location found.')
+        print('Adrino Links:', loc)
     except Exception as err:
         if isQuit: raise err
         else:
