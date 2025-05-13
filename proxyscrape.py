@@ -6,7 +6,7 @@ import requests, random, os
 def ultraChoice(l:list):
     nl = []
     for i in l:
-        for _ in range(randint(1, 10)):
+        for _ in range(randint(1, 100)):
             nl.append(i)
     return choice(nl)
 

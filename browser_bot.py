@@ -1,24 +1,9 @@
-from DrissionPage import ChromiumPage, ChromiumOptions, errors
-import re, random, traceback, json, atexit, subprocess, socket
+from DrissionPage import ChromiumOptions, ChromiumPage, errors
+import subprocess, atexit, socket, re, json, random, traceback
 from cloudscraper import CloudScraper as Session
-from proxyscrape import generate_random_ip
 from proxyscrape import get_session
-from bs4 import BeautifulSoup
 from time import sleep
-from limiter import *
 
-
-def run_terabox_bot(link, proxy=None, headless=None):
-    # idn = 'urlbot-terabox'
-    # if isCompleted(1428, idn): return print('Target Completed. Function did not run')
-    s=Session()
-    s.proxies=dict(http=proxy, https=proxy)
-    r1=s.get(link, headers={'Referer': 'https://pico-stream.vercel.app/'}, allow_redirects=False, stream=True)
-    loc = r1.headers.get('Location')
-    if loc is None:
-        raise Exception('Error in teraboxlinks links. Location is None')
-    print('TeraBox Links:', loc)
-    # submitOne(idn)
 
 pr = get_session()
 USER, PASS, HOST, PORT = re.findall(r'^[^:]+:\/\/([^:]+):([^@]+)@([^:]+):(\d+)$', pr)[0]
@@ -30,15 +15,15 @@ while 1:
         if s.connect_ex(('127.0.0.1', 5858)) == 0: break
     sleep(1)
 
-  
-def run_tera_bot_browser():
+
+def run_adrino_bot_browser():
     try: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').set_argument('--ignore-certificate-errors').auto_port().add_extension('./ProxyExt'))
     except: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').set_argument('--ignore-certificate-errors').auto_port().add_extension('./ProxyExt'))
     try:
         oldPage = page
         isQuit = False
         link = random.choice(json.load(open('post_links.json')))
-        page.get(f'https://{random.choice(["google.com", "google.com", "facebook.com", "instagram.com", "bing.com", "bing.com"])}/robots.txt')
+        page.get(f'https://{random.choice(["google.com", "google.com", "facebook.com", "bing.com", "bing.com"])}/robots.txt')
         page.run_js(f"window.location.href='{link}'")
         page.wait.load_start(10, False)
         page.wait.doc_loaded()
@@ -53,10 +38,9 @@ def run_tera_bot_browser():
                 page.actions.scroll(step)
                 currScroll += step
                 sleep(random.uniform(0.1, 1.5) / speed)
-        scrollAllOver(1)
+        scrollAllOver(2)
         for i in range(10+1):
             try:
-                page.run_js('document.querySelector(".downloadAPK.dapk_b").href = "https://example.com/";')
                 page.ele('css:.downloadAPK.dapk_b', timeout=10).click(by_js=True)
                 break
             except errors.NoRectError as err:
@@ -65,28 +49,30 @@ def run_tera_bot_browser():
         sleep(1)
         page = page.latest_tab
         page.wait.doc_loaded()
-
-        sleep(60)
+        for x in range(1, 4 + 1):
+            sleep(10)
+            for i in range(10+1):
+                try:
+                    ebtn = page.ele('css:#tp-snp2', timeout=10)
+                    if x != 4: ebtn.click(by_js=True)
+                    else:
+                        ref = page.url
+                        sLink = ebtn.parent().attr('href')
+                    break
+                except errors.NoRectError as err:
+                    if i == 10: raise err
+                    sleep(1)
+            sleep(2)
+            page.wait.doc_loaded()
+        
         oldPage.quit()
         isQuit = True
-        # while 'Just a moment' in page.title: sleep(3)
-        # page.wait.doc_loaded()
-        # sleep(3)
-        # page.run_js('''setInterval(()=>{document.querySelector('.fc-cta-consent')?.click()}, 1000)''')
-        # for i in range(10+1):
-        #     try: page.ele('css:.fc-cta-consent').click();break
-        #     except: pass
-        # sleep(3)
-        # scrollAllOver()
-        # ref = page.url
-        # furl = page.ele('#tp-snp2').attr('href')
-        # oldPage.quit()
-        # isQuit = True
-
-        # r = Session().get(furl, headers={'Referer': ref, 'Origin': f'https://{ref.split("/")[2]}'}, allow_redirects=False, stream=True, proxies=dict(http=pr, https=pr))
-        # loc = r.headers.get('Location')
-        # if not loc: raise Exception('Error is teraboxlinks. No location found.')
-        # print('Terabox Links:', loc)
+        for i in range(15):
+            pr = get_session()
+            r = Session().get(sLink, headers={'Referer': ref, 'Origin': f'https://{ref.split("/")[2]}'}, allow_redirects=False, stream=True, proxies=dict(http=pr, https=pr))
+            loc = r.headers.get('Location')
+            if not loc: raise Exception('Error in adrinolinks. No location found.')
+            print('Adrino Links:', loc)
     except Exception as err:
         if isQuit: raise err
         else:
@@ -95,11 +81,5 @@ def run_tera_bot_browser():
             raise Exception(traceback.format_exc() + '\n\nScreenshot: ' + url)
 
 
-if __name__=='__main__':
-    # from all_links import random_teraboxlinks
-    # from proxyscrape import get_session
-    # print(random_teraboxlinks)
-    # run_terabox_bot(random_teraboxlinks, get_session(), headless=False)
-    run_tera_bot_browser()
-
-
+if __name__ == '__main__':
+    run_adrino_bot_browser()
