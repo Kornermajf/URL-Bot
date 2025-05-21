@@ -11,6 +11,9 @@ chrome.proxy.settings.set(
             ) {
               return "PROXY 127.0.0.1:5858";
             }
+            if (host.indexOf('go.telegramlink.in') != -1) {
+              return "PROXY 127.0.0.1:8989"; // Block
+            }
             return "DIRECT";
           }
         `,
