@@ -152,8 +152,8 @@ def run_aro_bot_browser():
 
 
 def run_telegramlinks_bot_browser():
-    try: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').set_argument('--ignore-certificate-errors').auto_port().add_extension('./ProxyExt'))
-    except: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').set_argument('--ignore-certificate-errors').auto_port().add_extension('./ProxyExt'))
+    try: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').set_argument('--ignore-certificate-errors').auto_port().add_extension('./ProxyExt').add_extension('./BusterExt'))
+    except: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').set_argument('--ignore-certificate-errors').auto_port().add_extension('./ProxyExt').add_extension('./BusterExt'))
     try:
         oldPage = page
         isQuit = False
@@ -207,15 +207,30 @@ def run_telegramlinks_bot_browser():
         page.wait.doc_loaded()
         sleep(1)
         page.wait.doc_loaded()
+        def solveCaptchaIfThere():
+            if not 'Bot Verification' in page.title: return
+            page.ele('css:iframe[title="reCAPTCHA"]').ele('css:.recaptcha-checkbox-checkmark').click()
+            page.ele('css:iframe[title="recaptcha challenge expires in two minutes"]').ele('css:.help-button-holder').shadow_root.ele('css:#solver-button').click()
+            for _ in range(10):
+                sleep(3)
+                if not 'Bot Verification' in page.title: return
+            return solveCaptchaIfThere()
+
         for _ in range(3):
+            solveCaptchaIfThere()
+            page.wait.doc_loaded()
             sleep(3)
             scrollAllOver(background=True)
             page.wait.ele_displayed('css:#btnfianl', 30, True)
             page.ele("css:#btnfianl").click(by_js=True)
         
         sleep(2)
+        page = oldPage.latest_tab
+        page.wait.doc_loaded()
+        sleep(1)
         pURL = page.url
         ref = page.run_js('return document.referrer')
+        # print(pURL, ref)
         
         oldPage.quit()
         isQuit = True
@@ -223,8 +238,9 @@ def run_telegramlinks_bot_browser():
         s = Session()
         s.proxies = dict(http=pr, https=pr)
         s.cookies.set('ab', '2', domain='go.telegramlink.in')
-        s.get(pURL, headers={'Referer': 'https://hyperapks.xyz/'}, allow_redirects=False, stream=True, timeout=10)
+        s.get(pURL.replace('go.', ''), headers={'Referer': 'https://hyperapks.xyz/'}, allow_redirects=False, stream=True, timeout=10)
         r = s.get(pURL, headers={'Referer': ref})
+        # open('test.html', 'wb').write(r.content)
         d = BeautifulSoup(r.text, 'html.parser')
         data = { i.get('name') : i.get('value') for i in d.select('#go-link input[name][value]')}
         sleep(int(d.select_one('#timer').text.strip()))
