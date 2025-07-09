@@ -26,7 +26,7 @@ threading.excepthook=excepthook
 
 def main(proxy=None, **kw):
     t=[]
-    subprocess.Popen(f'{sys.executable} {os.path.join('ShareDiskLink', 'sdl_bot.py')}'.split()).wait()
+    # subprocess.Popen(f'{sys.executable} {os.path.join('ShareDiskLink', 'sdl_bot.py')}'.split()).wait()
     # t.append(Thread(target=lambda: run_terabox_bot(random_teraboxlinks, proxy, **kw)))
     # t.append(Thread(target=lambda: run_nano_bot(random_nanolinks, proxy, **kw)))
     # t.append(Thread(target=run_telegramlinks_bot_browser))
@@ -41,7 +41,7 @@ def main(proxy=None, **kw):
     
     if d['e']!='': raise Exception(d['e'])
     # Slow earning speed
-    sleep(30)
+    sleep(300)
 
 
 
