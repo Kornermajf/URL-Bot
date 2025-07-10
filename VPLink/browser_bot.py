@@ -65,9 +65,10 @@ def run_browser():
             page = oldPage.latest_tab
 
         page.wait.doc_loaded()
-        print(page.ele('css:#timer').text)
+        sleep(int(page.ele('css:#timer').text))
+        page.run_js('''document.querySelector("form").submit()''')
 
-        sleep(30)
+        sleep(5)
         oldPage.quit()
         isQuit = True
     except Exception as err:
