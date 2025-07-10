@@ -64,7 +64,7 @@ def run_browser():
             sleep(3)
             page = oldPage.latest_tab
         
-        sleep(10)
+        sleep(30)
         oldPage.quit()
         isQuit = True
     except Exception as err:
