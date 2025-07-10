@@ -32,12 +32,17 @@ def write(url):
 
 
 def request(flow: http.HTTPFlow) -> None:
-    # write(flow.request.pretty_url)
-    if flow.request.pretty_url.endswith('.apk') and flow.request.pretty_host == 'href.li':
+    url = flow.request.pretty_url
+    # write(url)
+
+    if 'links/go' in url:
+        flow.request.headers.add('X-Requested-With', 'XMLHttpRequest')
+
+    if url.endswith('.apk') and url == 'href.li':
         flow.response = http.Response.make(200, b'Prevented it', {'content-type': 'text/plain'})
         return
     
-    if isMatch(flow.request.pretty_url):
+    if isMatch(url):
         flow.server_conn = Server(address=flow.server_conn.address)
         flow.server_conn.via = ServerSpec(('http', (HOST, PORT)))
         return

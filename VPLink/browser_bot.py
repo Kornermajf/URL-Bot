@@ -59,11 +59,14 @@ def run_browser():
             sleep(2)
             page = oldPage.latest_tab
             page.wait.doc_loaded()
-        
+
         while 'vplink.in' not in page.url:
             sleep(3)
             page = oldPage.latest_tab
-        
+
+        page.wait.doc_loaded()
+        print(page.ele('css:#timer').text)
+
         sleep(30)
         oldPage.quit()
         isQuit = True
