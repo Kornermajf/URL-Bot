@@ -4,18 +4,15 @@ parent_dir = os.path.abspath(os.path.join(DIR, '..'))
 sys.path.insert(0, parent_dir)
 
 from DrissionPage import ChromiumOptions, ChromiumPage, errors
-import subprocess, atexit, socket, re, json, random, traceback
+import json, random, traceback, re
 from cloudscraper import CloudScraper as Session
-from proxyscrape import get_session
-from func import get_free_port
-from bs4 import BeautifulSoup
 from time import sleep
 from modify_req import runProxyServer
 
 
 PORT = runProxyServer()
 
-def run_shareDiskLink_bot_browser():
+def run_browser():
     try: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').set_argument('--ignore-certificate-errors').auto_port().set_proxy(f'http://127.0.0.1:{PORT}'))
     except: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').set_argument('--ignore-certificate-errors').auto_port().set_proxy(f'http://127.0.0.1:{PORT}'))
     try:
@@ -46,23 +43,28 @@ def run_shareDiskLink_bot_browser():
                 if i == 10: raise err
                 sleep(1)
         sleep(1)
-        page = page.latest_tab
+        page = oldPage.latest_tab
         page.wait.doc_loaded()
 
         for x in range(1, 2 + 1):
-            sleep(10)
+            sleep(15)
             for i in range(10+1):
                 try:
-                    ebtn = page.ele('css:#tp-snp2', timeout=10)
+                    ebtn = page.ele('css:#tp-snp2, #btn7', timeout=10)
                     ebtn.click(by_js=True)
                     break
                 except errors.NoRectError as err:
                     if i == 10: raise err
                     sleep(1)
             sleep(2)
+            page = oldPage.latest_tab
             page.wait.doc_loaded()
         
-        sleep(5)
+        while 'vplink.in' not in page.url:
+            sleep(3)
+            page = oldPage.latest_tab
+        
+        sleep(10)
         oldPage.quit()
         isQuit = True
     except Exception as err:
@@ -70,10 +72,10 @@ def run_shareDiskLink_bot_browser():
         else:
             ss = page.get_screenshot(as_bytes=True, full_page=True)
             url = Session().post('https://freeimage.host/api/1/upload', params=dict(key='6d207e02198a847aa98d0a2a901485a5'), files=dict(source=ss)).json().get('image', {}).get('url')
-            oldPage.quit()
+            # oldPage.quit()
             raise Exception(traceback.format_exc() + '\n\nScreenshot: ' + url)
 
 
 if __name__ == '__main__':
-    run_shareDiskLink_bot_browser()
+    run_browser()
 

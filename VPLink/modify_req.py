@@ -16,10 +16,9 @@ USER, PASS, HOST, PORT = re.findall(r'^[^:]+:\/\/([^:]+):([^@]+)@([^:]+):(\d+)$'
 proxiedURLs = [
     'google-analytics.com',
     'analytics.google.com',
-    'sharedisklinks.com',
-    '/safe.php',
-    '/open.php',
-    'over_proxy'
+    'st?api=',
+    re.compile(r"^https?://vplink\.in/[\w\-]+$"),
+    'links/go'
 ]
 
 def write(url):
@@ -38,10 +37,21 @@ def request(flow: http.HTTPFlow) -> None:
         flow.response = http.Response.make(200, b'Prevented it', {'content-type': 'text/plain'})
         return
     
-    if True in [i in flow.request.pretty_url for i in proxiedURLs]:
+    if isMatch(flow.request.pretty_url):
         flow.server_conn = Server(address=flow.server_conn.address)
         flow.server_conn.via = ServerSpec(('http', (HOST, PORT)))
         return
+
+
+def isMatch(url):
+    for u in proxiedURLs:
+        if type(u) == re.Pattern:
+            if u.findall(url):
+                return True
+        else:
+            if u in url:
+                return True
+    return False
 
 
 def runProxyServer(wait=False):
