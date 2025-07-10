@@ -69,6 +69,7 @@ def run_browser():
         page.run_js('''document.querySelector("form").submit()''')
 
         sleep(5)
+        print(page.html.strip())
         oldPage.quit()
         isQuit = True
     except Exception as err:
