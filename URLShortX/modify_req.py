@@ -17,8 +17,11 @@ proxiedURLs = [
     'google-analytics.com',
     'analytics.google.com',
     'st?api=',
-    re.compile(r"^https?://vplink\.in/[\w\-]+$"),
-    'links/go'
+    'xpshort.com',
+    '?adlinkfly',
+    '?safelink_redirect',
+    'links/go',
+    re.compile(r"^https?://odisha-remix\.com/[\w\-]+$"),
 ]
 
 def write(url):
@@ -35,8 +38,8 @@ def request(flow: http.HTTPFlow) -> None:
     url = flow.request.pretty_url
     # write(url)
 
-    if 'links/go' in url:
-        flow.request.headers.add('X-Requested-With', 'XMLHttpRequest')
+    # if 'links/go' in url:
+    #     flow.request.headers.add('X-Requested-With', 'XMLHttpRequest')
 
     if url.endswith('.apk') and url == 'href.li':
         flow.response = http.Response.make(200, b'Prevented it', {'content-type': 'text/plain'})

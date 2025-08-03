@@ -12,6 +12,12 @@ from modify_req import runProxyServer
 
 PORT = runProxyServer()
 
+def click_ignore_norect(page, *a, **kw):
+    try: return page.ele(*a, **kw).click()
+    except errors.NoRectError:
+        sleep(3)
+        return click_ignore_norect(page, *a, **kw)
+
 def run_browser():
     try: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').set_argument('--ignore-certificate-errors').auto_port().set_proxy(f'http://127.0.0.1:{PORT}'))
     except: page = ChromiumPage(ChromiumOptions().set_argument('--start-maximized').set_argument('--ignore-certificate-errors').auto_port().set_proxy(f'http://127.0.0.1:{PORT}'))
@@ -46,30 +52,23 @@ def run_browser():
         page = oldPage.latest_tab
         page.wait.doc_loaded()
 
-        for x in range(1, 2 + 1):
-            sleep(15)
-            for i in range(10+1):
-                try:
-                    ebtn = page.ele('css:#tp-snp2, #btn7', timeout=10)
-                    ebtn.click(by_js=True)
-                    break
-                except errors.NoRectError as err:
-                    if i == 10: raise err
-                    sleep(1)
-            sleep(2)
-            page = oldPage.latest_tab
-            page.wait.doc_loaded()
+        click_ignore_norect(page, 'css:#wpsafelinkhuman button')
+        sleep(1)
+        page.wait.doc_loaded()
 
-        while 'vplink.in' not in page.url:
-            sleep(3)
-            page = oldPage.latest_tab
+        click_ignore_norect(page, 'css:#wpsafe-generate button', timeout=40)
+
+        click_ignore_norect(page, 'css:#wpsafe-link button', timeout=40)
+        sleep(1)
 
         page.wait.doc_loaded()
         sleep(int(page.ele('css:#timer').text))
-        page.run_js('''document.querySelector("form").submit()''')
+        while page.ele('css.get-link.disabled'): sleep(3)
+        page.ele('css:.get-link').click()
+        # page.run_js('''document.querySelector("form").submit()''')
 
         sleep(5)
-        print(page.html.strip())
+        # print(page.html.strip())
         oldPage.quit()
         isQuit = True
     except Exception as err:

@@ -27,7 +27,7 @@ threading.excepthook=excepthook
 def main(proxy=None, **kw):
     t=[]
     # os.system(f'{sys.executable} {os.path.join("VPLink", "browser_bot.py")}')
-    # subprocess.Popen(f'{sys.executable} {os.path.join('VPLink', 'browser_bot.py')}'.split(), stderr=subprocess.STDOUT).wait()
+    subprocess.Popen(f'{sys.executable} {os.path.join('URLShortX', 'browser_bot.py')}'.split(), stderr=subprocess.STDOUT).wait()
     
     # t.append(Thread(target=lambda: run_terabox_bot(random_teraboxlinks, proxy, **kw)))
     # t.append(Thread(target=lambda: run_nano_bot(random_nanolinks, proxy, **kw)))
@@ -43,7 +43,7 @@ def main(proxy=None, **kw):
     
     if d['e']!='': raise Exception(d['e'])
     # Slow earning speed
-    sleep(300)
+    sleep(60)
 
 
 if __name__ == '__main__':
