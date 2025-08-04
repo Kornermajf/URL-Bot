@@ -56,9 +56,9 @@ def run_browser():
         page = oldPage.latest_tab
         page.wait.doc_loaded()
 
-        for _ in range(4):
+        for _ in range(5):
             sleep(20)
-            click_ignore_norect(page, 'css:#btn6')
+            click_ignore_norect(page, 'css:#btn6, #tp-snp2')
             sleep(2)
             page.wait.doc_loaded()
 
