@@ -63,7 +63,11 @@ def run_browser():
             page.wait.doc_loaded()
 
         page.wait.doc_loaded()
-        while 'href.li' not in page.url: sleep(3)
+        ia = 0
+        while 'href.li' not in page.url:
+            ia += 1
+            sleep(3)
+            if ia > 15: raise Exception('Page is not redirecting to main url')
         print(page.url)
         oldPage.quit()
         isQuit = True
