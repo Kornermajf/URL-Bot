@@ -13,9 +13,12 @@ from modify_req import runProxyServer
 PORT = runProxyServer()
 
 def click_ignore_norect(page, *a, **kw):
+    n = kw.pop('n', 1)
+    if n > 20: raise Exception('Max Retry Exceed on click function.')
     try: return page.ele(*a, **kw).click(by_js=1)
     except errors.NoRectError:
         sleep(3)
+        kw['n'] = n + 1
         return click_ignore_norect(page, *a, **kw)
 
 def run_browser():
