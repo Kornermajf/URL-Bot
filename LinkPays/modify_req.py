@@ -9,19 +9,31 @@ from mitmproxy.connection import Server
 from mitmproxy.net.server_spec import ServerSpec
 from func import get_free_port
 from time import sleep
-import re, subprocess, atexit, socket
+import re, subprocess, atexit, socket, requests
 
-pr = get_session()
+while 1:
+    try:
+        pr = get_session()
+        if requests.head('http://linkpays.in/', proxies=dict(http=pr, https=pr)).status_code == 502:
+            print('Invalid Status')
+            continue
+        else: break
+    except Exception as err:
+        print(err)
+        continue
+
+# print(requests.get('http://ip.oxylabs.io', proxies=dict(http=pr, https=pr)).text.strip())
+# exit()
+
 USER, PASS, HOST, PORT = re.findall(r'^[^:]+:\/\/([^:]+):([^@]+)@([^:]+):(\d+)$', pr)[0]
 proxiedURLs = [
     'google-analytics.com',
     'analytics.google.com',
     'st?api=',
-    'xpshort.com',
-    '?adlinkfly',
-    '?safelink_redirect',
+    'safe.php?id=',
+    'go.php?id=',
     'links/go',
-    re.compile(r"^https?://odisha-remix\.com/[\w\-]+$"),
+    re.compile(r"^https?://linkpays\.in/[\w\-]+$"),
 ]
 
 def write(url):
@@ -41,7 +53,7 @@ def request(flow: http.HTTPFlow) -> None:
     # if 'links/go' in url:
     #     flow.request.headers.add('X-Requested-With', 'XMLHttpRequest')
 
-    if url.endswith('.apk') and url == 'href.li':
+    if url.endswith('.apk') and 'href.li' in flow.request.pretty_host:
         flow.response = http.Response.make(200, b'Prevented it', {'content-type': 'text/plain'})
         return
     

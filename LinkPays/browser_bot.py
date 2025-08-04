@@ -13,7 +13,7 @@ from modify_req import runProxyServer
 PORT = runProxyServer()
 
 def click_ignore_norect(page, *a, **kw):
-    try: return page.ele(*a, **kw).click()
+    try: return page.ele(*a, **kw).click(by_js=1)
     except errors.NoRectError:
         sleep(3)
         return click_ignore_norect(page, *a, **kw)
@@ -41,6 +41,7 @@ def run_browser():
                 currScroll += step
                 sleep(random.uniform(0.1, 1.5) / speed)
         scrollAllOver(2)
+        page.wait.doc_loaded()
         for i in range(10+1):
             try:
                 page.ele('css:.downloadAPK.dapk_b', timeout=10).click(by_js=True)
@@ -52,23 +53,15 @@ def run_browser():
         page = oldPage.latest_tab
         page.wait.doc_loaded()
 
-        click_ignore_norect(page, 'css:#wpsafelinkhuman button')
-        sleep(1)
-        page.wait.doc_loaded()
-
-        click_ignore_norect(page, 'css:#wpsafe-generate button', timeout=40)
-
-        click_ignore_norect(page, 'css:#wpsafe-link button', timeout=40)
-        sleep(1)
+        for _ in range(4):
+            sleep(20)
+            click_ignore_norect(page, 'css:#btn6')
+            sleep(2)
+            page.wait.doc_loaded()
 
         page.wait.doc_loaded()
-        sleep(int(page.ele('css:#timer').text))
-        while page.ele('css.get-link.disabled'): sleep(3)
-        page.ele('css:.get-link').click()
-        # page.run_js('''document.querySelector("form").submit()''')
-
-        sleep(5)
-        # print(page.html.strip())
+        while 'href.li' not in page.url: sleep(3)
+        print(page.url)
         oldPage.quit()
         isQuit = True
     except Exception as err:
